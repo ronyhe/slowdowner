@@ -61,9 +61,8 @@
             audio.currentTime = start
         }
         if (audio.currentTime > end || audio.currentTime > audio.duration) {
-            if (elem('loop').checked) {
-                audio.currentTime = start
-            } else {
+            audio.currentTime = start
+            if (!elem('loop').checked) {
                 audio.pause()
             }
         }

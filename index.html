@@ -15,6 +15,8 @@
 <br />
 <label for="end-minutes">End  : </label><input type="number" value=3 step="1" min="0" max="3" id="end-minutes">
 <label for="end-seconds"></label><input type="number" value=59 step="1" min="0" max="59" id="end-seconds">
+<br/>
+<button onclick="onReset()">Reset to full song</button>
 <script>
     function audio() {
         return document.getElementById('audio')
@@ -36,6 +38,11 @@
         document.getElementById('end-minutes').max = minutes
         document.getElementById('end-minutes').value = minutes
         document.getElementById('end-seconds').value = seconds
+    }
+    function onReset() {
+        if (audio().duration) {
+            onDurationChange()
+        }
     }
 </script>
 </body>

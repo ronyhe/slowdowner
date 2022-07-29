@@ -20,46 +20,53 @@
 <br />
 <label>
     Loop
-    <input id="loop" type="checkbox" />
+    <input id="loop" type="checkbox" checked/>
 </label>
 <script>
-    function audio() {
-        return document.getElementById('audio')
+    function elem(name) {
+        return document.getElementById(name)
+    }
+    function audioElement() {
+        return elem('audio')
+    }
+    function timerValue(name) {
+        return Number.parseInt(elem(name).value)
     }
     function onChangeFile() {
-        audio().src = URL.createObjectURL(document.getElementById('file-input').files[0])
+        audioElement().src = URL.createObjectURL(elem('file-input').files[0])
     }
     function onChangeSpeed() {
-        audio().playbackRate = document.getElementById('speed').value
+        audioElement().playbackRate = elem('speed').value
     }
     function onDurationChange() {
-        const duration = audio().duration
+        const duration = audioElement().duration
         const minutes = Math.floor(duration / 60)
         const seconds = Math.floor(duration % 60) + 1
         const timeInputs = ['start-minutes', 'start-seconds', 'end-minutes', 'end-seconds']
         timeInputs.forEach(name => {
-            document.getElementById(name).value = 0
+            elem(name).value = 0
         })
-        document.getElementById('end-minutes').max = minutes
-        document.getElementById('end-minutes').value = minutes
-        document.getElementById('end-seconds').value = seconds
+        elem('end-minutes').max = minutes
+        elem('end-minutes').value = minutes
+        elem('end-seconds').value = seconds
     }
     function onTimeUpdate() {
-        const start = Number.parseInt(document.getElementById('start-minutes').value) * 60 + Number.parseInt(document.getElementById('start-seconds').value)
-        const end = Number.parseInt(document.getElementById('end-minutes').value) * 60 + Number.parseInt(document.getElementById('end-seconds').value)
-        if (audio().currentTime < start) {
-            audio().currentTime = start
+        const audio = audioElement()
+        const start = timerValue('start-minutes') * 60 + timerValue('start-seconds')
+        const end = timerValue('end-minutes') * 60 + timerValue('end-seconds')
+        if (audio.currentTime < start) {
+            audio.currentTime = start
         }
-        if (audio().currentTime > end || audio().currentTime > audio().duration) {
-            if (document.getElementById('loop').checked) {
-                audio().currentTime = start
+        if (audio.currentTime > end || audio.currentTime > audio.duration) {
+            if (elem('loop').checked) {
+                audio.currentTime = start
             } else {
-                audio().pause()
+                audio.pause()
             }
         }
     }
     function onReset() {
-        if (audio().duration) {
+        if (audioElement().duration) {
             onDurationChange()
         }
     }

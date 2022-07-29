@@ -38,14 +38,17 @@
     function onChangeSpeed() {
         audioElement().playbackRate = elem('speed').value
     }
-    function onDurationChange() {
-        const duration = audioElement().duration
-        const minutes = Math.floor(duration / 60)
-        const seconds = Math.floor(duration % 60) + 1
+    function zeroOutTimers() {
         const timeInputs = ['start-minutes', 'start-seconds', 'end-minutes', 'end-seconds']
         timeInputs.forEach(name => {
             elem(name).value = 0
         })
+    }
+    function onDurationChange() {
+        const duration = audioElement().duration
+        const minutes = Math.floor(duration / 60)
+        const seconds = Math.floor(duration % 60) + 1
+        zeroOutTimers()
         elem('end-minutes').max = minutes
         elem('end-minutes').value = minutes
         elem('end-seconds').value = seconds

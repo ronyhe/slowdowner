@@ -8,7 +8,7 @@
 <input type="file" id="file-input" onchange="onChangeFile()" accept="audio/*">
 <label for="speed">Speed: </label><input value="1.0" step="0.1" min="0.1" max="1.0" type="number" id="speed" onchange="onChangeSpeed()"/>
 <br />
-<audio id="audio" controls></audio>
+<audio id="audio" controls ondurationchange="onDurationChange()"></audio>
 <br />
 <label for="start-minutes">Start: </label><input type="number" value=0 step="1" min="0" max="3" id="start-minutes">
 <label for="start-seconds"></label><input type="number" value="0" step="1" min="0" max="59" id="start-seconds">
@@ -16,11 +16,24 @@
 <label for="end-minutes">End  : </label><input type="number" value=3 step="1" min="0" max="3" id="end-minutes">
 <label for="end-seconds"></label><input type="number" value=59 step="1" min="0" max="59" id="end-seconds">
 <script>
+    function audio() {
+        return document.getElementById('audio')
+    }
     function onChangeFile() {
-        document.getElementById('audio').src = URL.createObjectURL(document.getElementById('file-input').files[0])
+        audio().src = URL.createObjectURL(document.getElementById('file-input').files[0])
     }
     function onChangeSpeed() {
-        document.getElementById('audio').playbackRate = document.getElementById('speed').value
+        audio().playbackRate = document.getElementById('speed').value
+    }
+    function onDurationChange() {
+        const duration = audio().duration
+        const minutes = Math.floor(duration / 60)
+        document.getElementById('start-minutes').value = 0
+        document.getElementById('start-seconds').value = 0
+        document.getElementById('end-minutes').value = 0
+        document.getElementById('end-seconds').value = 0
+
+        document.getElementById('end-minutes').max = minutes
     }
 </script>
 </body>

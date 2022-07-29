@@ -28,11 +28,14 @@
     function onDurationChange() {
         const duration = audio().duration
         const minutes = Math.floor(duration / 60)
+        const seconds = Math.floor(duration % 60) + 1
         const timeInputs = ['start-minutes', 'start-seconds', 'end-minutes', 'end-seconds']
         timeInputs.forEach(name => {
             document.getElementById(name).value = 0
         })
         document.getElementById('end-minutes').max = minutes
+        document.getElementById('end-minutes').value = minutes
+        document.getElementById('end-seconds').value = seconds
     }
 </script>
 </body>

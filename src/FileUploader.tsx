@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import { styled } from '@mui/material/styles'
 
-const Div = styled('div')(({ theme }) => ({
+const TextDiv = styled('div')(({ theme }) => ({
     ...theme.typography.button,
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1)
@@ -24,7 +24,7 @@ function FileUploader({
 }) {
     const [file, setFile] = useState<File | null>(null)
     return (
-        <Div>
+        <TextDiv>
             <FileComp file={file} />
             <Button variant='contained' component='label'>
                 <AudioFileIcon fontSize='large' />
@@ -41,7 +41,7 @@ function FileUploader({
                     }}
                 />
             </Button>
-        </Div>
+        </TextDiv>
     )
 }
 

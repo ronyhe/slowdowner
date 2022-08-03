@@ -14,15 +14,17 @@ function FileComp({ file }: { file: File | null }) {
     if (!file) {
         return null
     }
-    return <>file.name</>
+    return <>{file.name}</>
 }
 
 function FileUploader({
+    file,
     onFileChosen
 }: {
+    file: File | null
     onFileChosen: (file: File) => void
 }) {
-    const [file, setFile] = useState<File | null>(null)
+    const [innerFile, setInnerFile] = useState<File | null>(file)
     return (
         <TextDiv>
             <Button variant='contained' component='label'>
@@ -35,12 +37,12 @@ function FileUploader({
                         const file = e.target.files && e.target.files[0]
                         if (file) {
                             onFileChosen(file)
-                            setFile(file)
+                            setInnerFile(file)
                         }
                     }}
                 />
             </Button>
-            <FileComp file={file} />
+            <FileComp file={innerFile} />
         </TextDiv>
     )
 }

@@ -25,7 +25,6 @@ function FileUploader({
     const [file, setFile] = useState<File | null>(null)
     return (
         <TextDiv>
-            <FileComp file={file} />
             <Button variant='contained' component='label'>
                 <AudioFileIcon fontSize='large' />
                 <input
@@ -41,6 +40,7 @@ function FileUploader({
                     }}
                 />
             </Button>
+            <FileComp file={file} />
         </TextDiv>
     )
 }

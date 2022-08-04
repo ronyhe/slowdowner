@@ -14,7 +14,7 @@ function FileComp({ file }: { file: File | null }) {
     if (!file) {
         return null
     }
-    return <>{file.name}</>
+    return <TextDiv>{file.name}</TextDiv>
 }
 
 function FileUploader({
@@ -26,7 +26,7 @@ function FileUploader({
 }) {
     const [innerFile, setInnerFile] = useState<File | null>(file)
     return (
-        <TextDiv>
+        <>
             <Button variant='contained' component='label'>
                 <AudioFileIcon fontSize='large' />
                 <input
@@ -43,7 +43,7 @@ function FileUploader({
                 />
             </Button>
             <FileComp file={innerFile} />
-        </TextDiv>
+        </>
     )
 }
 

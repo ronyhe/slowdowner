@@ -1,11 +1,12 @@
 import FileUploader from './FileUploader'
 import Bar from './Bar'
 import { ZERO } from './time'
-import PlayPauseButton from './PlayPauseButton'
+import PlayPauseButton, { PlayPauseStatus } from './PlayPauseButton'
 import React, { useState } from 'react'
 
 function Slowdowner() {
-    const [isPlaying, setIsPlaying] = useState(false)
+    const [playPauseStatus, setPlayPauseStatus] =
+        useState<PlayPauseStatus>('paused')
     return (
         <div style={{ maxWidth: '400px', maxHeight: '150px', margin: '20px' }}>
             <FileUploader
@@ -23,11 +24,8 @@ function Slowdowner() {
                 end={{ minutes: 3, seconds: 0 }}
             />
             <PlayPauseButton
-                isPlaying={isPlaying}
-                statusChange={is => {
-                    console.log(is)
-                    setIsPlaying(is)
-                }}
+                status={'paused'}
+                onStatusChange={setPlayPauseStatus}
             />
         </div>
     )

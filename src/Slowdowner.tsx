@@ -11,7 +11,14 @@ function Slowdowner() {
                     console.log(file)
                 }}
             />
-            <Bar min={ZERO} max={{ minutes: 3, seconds: 0 }} current={ZERO} />
+            <Bar
+                onStartChange={console.log}
+                onEndChange={console.log}
+                max={{ minutes: 3, seconds: 0 }}
+                current={{ minutes: 1, seconds: 15 }}
+                start={ZERO}
+                end={{ minutes: 3, seconds: 0 }}
+            />
         </div>
     )
 }

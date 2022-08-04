@@ -31,7 +31,6 @@ function PlayPauseButton(props: {
         props.onStatusChange(newStatus)
         setStatus(newStatus)
     }
-    console.log({ status })
     return (
         <>
             <Button variant='contained' component='label' onClick={onClick}>

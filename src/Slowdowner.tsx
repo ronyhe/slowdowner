@@ -1,17 +1,22 @@
 import FileUploader from './FileUploader'
 import Bar from './Bar'
 import { ZERO } from './time'
-import PlayPauseButton from './PlayPauseButton'
-import React from 'react'
+import PlayPauseButton, { PlayPauseStatus } from './PlayPauseButton'
+import React, { useState } from 'react'
 import SpeedController from './SpeedController'
 
 function Slowdowner() {
+    const [file, setFile] = useState<File | null>(null)
+    const [playPauseStatus, setPlayPauseStatus] =
+        useState<PlayPauseStatus>('disabled')
+    const [speed, setSpeed] = useState(1.0)
     return (
         <div style={{ maxWidth: '400px', maxHeight: '150px', margin: '20px' }}>
             <FileUploader
-                file={null}
-                onFileChosen={(file: File) => {
-                    console.log(file)
+                file={file}
+                onFileChosen={file => {
+                    setFile(file)
+                    setPlayPauseStatus('paused')
                 }}
             />
             <Bar
@@ -22,13 +27,11 @@ function Slowdowner() {
                 start={ZERO}
                 end={{ minutes: 3, seconds: 0 }}
             />
-            <PlayPauseButton status={'disabled'} onStatusChange={console.log} />
-            <SpeedController
-                speed={1.0}
-                onSpeedChange={speed => {
-                    console.log({ speed })
-                }}
+            <PlayPauseButton
+                status={playPauseStatus}
+                onStatusChange={setPlayPauseStatus}
             />
+            <SpeedController speed={speed} onSpeedChange={setSpeed} />
         </div>
     )
 }

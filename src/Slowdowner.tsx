@@ -15,12 +15,14 @@ function Slowdowner() {
         minutes: 1,
         seconds: 15
     })
+    const [startTime, setStartTime] = useState<Time>(ZERO)
     const audio = file ? (
         <Audio
             file={file}
             shouldPlay={playPauseStatus === 'playing'}
             onCurrentTimeChange={setCurrentTime}
             speed={speed}
+            start={startTime}
         />
     ) : null
     return (
@@ -34,11 +36,11 @@ function Slowdowner() {
                 }}
             />
             <Bar
-                onStartChange={console.log}
+                onStartChange={setStartTime}
                 onEndChange={console.log}
                 max={{ minutes: 3, seconds: 0 }}
                 current={currentTime}
-                start={ZERO}
+                start={startTime}
                 end={{ minutes: 3, seconds: 0 }}
             />
             <PlayPauseButton

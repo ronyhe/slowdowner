@@ -1,5 +1,5 @@
 import React, { DependencyList, useEffect, useRef } from 'react'
-import { fromSeconds, Time } from './time'
+import { before, fromSeconds, Time, toSeconds } from './time'
 
 function useAudioEffect(
     audioRef: React.RefObject<HTMLAudioElement>,
@@ -26,9 +26,13 @@ function Audio(props: {
     shouldPlay: boolean
     onCurrentTimeChange: (time: Time) => void
     speed: number
+    start: Time
 }) {
     const ref = useRef<HTMLAudioElement>(null)
     const useAudio = useAudioEffects(ref)
+    useAudio(audio => {
+        audio.loop = true
+    })
     useAudio(
         audio => {
             audio.src = URL.createObjectURL(props.file)
@@ -45,15 +49,22 @@ function Audio(props: {
         },
         [props.shouldPlay]
     )
-    useAudio(audio => {
-        const listener = () => {
-            props.onCurrentTimeChange(fromSeconds(audio.currentTime))
-        }
-        audio.addEventListener('timeupdate', listener)
-        return () => {
-            audio.removeEventListener('timeupdate', listener)
-        }
-    })
+    useAudio(
+        audio => {
+            const listener = () => {
+                const currentTime = fromSeconds(audio.currentTime)
+                props.onCurrentTimeChange(currentTime)
+                if (before(currentTime, props.start)) {
+                    audio.currentTime = toSeconds(props.start)
+                }
+            }
+            audio.addEventListener('timeupdate', listener)
+            return () => {
+                audio.removeEventListener('timeupdate', listener)
+            }
+        },
+        [props.start]
+    )
     useAudio(
         audio => {
             audio.playbackRate = props.speed

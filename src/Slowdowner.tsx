@@ -3,6 +3,7 @@ import Bar from './Bar'
 import { ZERO } from './time'
 import PlayPauseButton from './PlayPauseButton'
 import React from 'react'
+import SpeedController from './SpeedController'
 
 function Slowdowner() {
     return (
@@ -22,6 +23,12 @@ function Slowdowner() {
                 end={{ minutes: 3, seconds: 0 }}
             />
             <PlayPauseButton status={'paused'} onStatusChange={console.log} />
+            <SpeedController
+                speed={1.0}
+                onSpeedChange={speed => {
+                    console.log({ speed })
+                }}
+            />
         </div>
     )
 }

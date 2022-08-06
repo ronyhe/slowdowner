@@ -20,6 +20,7 @@ function Slowdowner() {
             file={file}
             shouldPlay={playPauseStatus === 'playing'}
             onCurrentTimeChange={setCurrentTime}
+            speed={speed}
         />
     ) : null
     return (

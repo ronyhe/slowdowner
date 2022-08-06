@@ -25,6 +25,7 @@ function Audio(props: {
     file: File
     shouldPlay: boolean
     onCurrentTimeChange: (time: Time) => void
+    speed: number
 }) {
     const ref = useRef<HTMLAudioElement>(null)
     const useAudio = useAudioEffects(ref)
@@ -53,6 +54,13 @@ function Audio(props: {
             audio.removeEventListener('timeupdate', listener)
         }
     })
+    useAudio(
+        audio => {
+            audio.playbackRate = props.speed
+            audio.defaultPlaybackRate = props.speed
+        },
+        [props.speed]
+    )
     return (
         <>
             <audio ref={ref} />

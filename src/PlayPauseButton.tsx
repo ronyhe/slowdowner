@@ -11,7 +11,7 @@ function PlayButton() {
     return <PlayCircleIcon fontSize='large' />
 }
 
-export type PlayPauseStatus = 'playing' | 'paused'
+export type PlayPauseStatus = 'playing' | 'paused' | 'disabled'
 
 function flipStatus(status: PlayPauseStatus): PlayPauseStatus {
     if (status === 'playing') {
@@ -33,7 +33,12 @@ function PlayPauseButton(props: {
     }
     return (
         <>
-            <Button variant='contained' component='label' onClick={onClick}>
+            <Button
+                variant='contained'
+                component='label'
+                onClick={onClick}
+                disabled={props.status === 'disabled'}
+            >
                 {status === 'playing' ? <PauseButton /> : <PlayButton />}
             </Button>
         </>

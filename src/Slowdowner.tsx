@@ -22,7 +22,7 @@ function Slowdowner() {
                 start={ZERO}
                 end={{ minutes: 3, seconds: 0 }}
             />
-            <PlayPauseButton status={'paused'} onStatusChange={console.log} />
+            <PlayPauseButton status={'disabled'} onStatusChange={console.log} />
             <SpeedController
                 speed={1.0}
                 onSpeedChange={speed => {

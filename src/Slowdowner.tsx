@@ -1,6 +1,6 @@
 import FileUploader from './FileUploader'
 import Bar from './Bar'
-import { ZERO } from './time'
+import { Time, ZERO } from './time'
 import PlayPauseButton, { PlayPauseStatus } from './PlayPauseButton'
 import React, { useState } from 'react'
 import SpeedController from './SpeedController'
@@ -11,8 +11,16 @@ function Slowdowner() {
     const [playPauseStatus, setPlayPauseStatus] =
         useState<PlayPauseStatus>('disabled')
     const [speed, setSpeed] = useState(1.0)
+    const [currentTime, setCurrentTime] = useState<Time>({
+        minutes: 1,
+        seconds: 15
+    })
     const audio = file ? (
-        <Audio file={file} shouldPlay={playPauseStatus === 'playing'} />
+        <Audio
+            file={file}
+            shouldPlay={playPauseStatus === 'playing'}
+            onCurrentTimeChange={setCurrentTime}
+        />
     ) : null
     return (
         <div style={{ maxWidth: '400px', maxHeight: '150px', margin: '20px' }}>
@@ -21,13 +29,14 @@ function Slowdowner() {
                 onFileChosen={file => {
                     setFile(file)
                     setPlayPauseStatus('paused')
+                    setCurrentTime(ZERO)
                 }}
             />
             <Bar
                 onStartChange={console.log}
                 onEndChange={console.log}
                 max={{ minutes: 3, seconds: 0 }}
-                current={{ minutes: 1, seconds: 15 }}
+                current={currentTime}
                 start={ZERO}
                 end={{ minutes: 3, seconds: 0 }}
             />

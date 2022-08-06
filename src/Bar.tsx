@@ -3,12 +3,16 @@ import { fromSeconds, Time, toSeconds } from './time'
 import React, { useState } from 'react'
 
 function padClockText(num: number): string {
-    return String(num).padStart(2, '0')
+    return String(num).padStart(2, '0').padEnd(2, '0')
+}
+
+function timeText(time: Time): string {
+    return `${padClockText(time.minutes)}:${padClockText(time.seconds)}`
 }
 
 function secondsToTimeText(seconds: number): string {
     const time = fromSeconds(seconds)
-    return `${padClockText(time.minutes)}:${padClockText(time.seconds)}`
+    return timeText(time)
 }
 
 export type TimeChangeHandler = (time: Time) => void
@@ -22,7 +26,6 @@ function Bar(props: {
     onEndChange: TimeChangeHandler
 }) {
     const [max] = useState<number>(toSeconds(props.max))
-    const [current] = useState<number>(toSeconds(props.current))
     const [start, setStart] = useState<number>(toSeconds(props.start))
     const [end, setEnd] = useState<number>(toSeconds(props.end))
     return (
@@ -32,8 +35,8 @@ function Bar(props: {
                 max={max}
                 marks={[
                     {
-                        value: current,
-                        label: secondsToTimeText(current)
+                        value: toSeconds(props.current),
+                        label: timeText(props.current)
                     }
                 ]}
                 valueLabelFormat={secondsToTimeText}

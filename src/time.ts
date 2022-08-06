@@ -10,7 +10,7 @@ export function toSeconds({ minutes, seconds }: Time): number {
 export function fromSeconds(seconds: number): Time {
     return {
         minutes: Math.floor(seconds / 60),
-        seconds: seconds % 60
+        seconds: Math.floor(seconds % 60)
     }
 }
 

@@ -1,4 +1,5 @@
 import React, { DependencyList, useEffect, useRef } from 'react'
+import { fromSeconds, Time } from './time'
 
 function useAudioEffect(
     audioRef: React.RefObject<HTMLAudioElement>,
@@ -7,7 +8,7 @@ function useAudioEffect(
 ) {
     useEffect(() => {
         if (audioRef.current) {
-            func(audioRef.current)
+            return func(audioRef.current)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [audioRef.current, ...(deps ?? [])])
@@ -20,7 +21,11 @@ function useAudioEffects(audioRef: React.RefObject<HTMLAudioElement>) {
     }
 }
 
-function Audio(props: { file: File; shouldPlay: boolean }) {
+function Audio(props: {
+    file: File
+    shouldPlay: boolean
+    onCurrentTimeChange: (time: Time) => void
+}) {
     const ref = useRef<HTMLAudioElement>(null)
     const useAudio = useAudioEffects(ref)
     useAudio(
@@ -39,6 +44,15 @@ function Audio(props: { file: File; shouldPlay: boolean }) {
         },
         [props.shouldPlay]
     )
+    useAudio(audio => {
+        const listener = () => {
+            props.onCurrentTimeChange(fromSeconds(audio.currentTime))
+        }
+        audio.addEventListener('timeupdate', listener)
+        return () => {
+            audio.removeEventListener('timeupdate', listener)
+        }
+    })
     return (
         <>
             <audio ref={ref} />

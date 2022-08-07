@@ -25,6 +25,7 @@ function Audio(props: {
     file: File
     shouldPlay: boolean
     onCurrentTimeChange: (time: Time) => void
+    onDurationChange: (time: Time) => void
     speed: number
     start: Time
     end: Time
@@ -39,6 +40,18 @@ function Audio(props: {
             audio.src = URL.createObjectURL(props.file)
         },
         [props.file]
+    )
+    useAudio(
+        audio => {
+            const listener = () => {
+                props.onDurationChange(fromSeconds(audio.duration))
+            }
+            audio.addEventListener('durationchange', listener)
+            return () => {
+                audio.removeEventListener('durationchange', listener)
+            }
+        },
+        [props.onDurationChange]
     )
     useAudio(
         audio => {
@@ -67,7 +80,7 @@ function Audio(props: {
                 audio.removeEventListener('timeupdate', listener)
             }
         },
-        [props.start, props.end]
+        [props.start, props.end, props.onCurrentTimeChange]
     )
     useAudio(
         audio => {

@@ -25,14 +25,13 @@ function Bar(props: {
     onStartChange: TimeChangeHandler
     onEndChange: TimeChangeHandler
 }) {
-    const [max] = useState<number>(toSeconds(props.max))
-    const [start, setStart] = useState<number>(toSeconds(props.start))
-    const [end, setEnd] = useState<number>(toSeconds(props.end))
+    const start = toSeconds(props.start)
+    const end = toSeconds(props.end)
     return (
         <>
             <Slider
                 min={0}
-                max={max}
+                max={toSeconds(props.max)}
                 marks={[
                     {
                         value: toSeconds(props.current),
@@ -48,10 +47,8 @@ function Bar(props: {
                     if (newEnd - newStart > 1) {
                         if (newStart !== start) {
                             props.onStartChange(fromSeconds(newStart))
-                            setStart(newStart)
                         } else if (newEnd !== end) {
                             props.onEndChange(fromSeconds(newEnd))
-                            setEnd(newEnd)
                         }
                     }
                 }}

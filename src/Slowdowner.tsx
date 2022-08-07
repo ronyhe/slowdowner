@@ -6,6 +6,8 @@ import React, { useState } from 'react'
 import SpeedController from './SpeedController'
 import Audio from './Audio'
 
+const THREE_MINUTES = { minutes: 3, seconds: 0 }
+
 function Slowdowner() {
     const [file, setFile] = useState<File | null>(null)
     const [playPauseStatus, setPlayPauseStatus] =
@@ -16,12 +18,19 @@ function Slowdowner() {
         seconds: 15
     })
     const [startTime, setStartTime] = useState<Time>(ZERO)
-    const [endTime, setEndTime] = useState<Time>({ minutes: 3, seconds: 0 })
+    const [endTime, setEndTime] = useState<Time>(THREE_MINUTES)
+    const [duration, setDuration] = useState<Time>(THREE_MINUTES)
     const audio = file ? (
         <Audio
             file={file}
             shouldPlay={playPauseStatus === 'playing'}
             onCurrentTimeChange={setCurrentTime}
+            onDurationChange={duration => {
+                setDuration(duration)
+                setEndTime(duration)
+                setStartTime(ZERO)
+                setCurrentTime(ZERO)
+            }}
             speed={speed}
             start={startTime}
             end={endTime}
@@ -34,13 +43,12 @@ function Slowdowner() {
                 onFileChosen={file => {
                     setFile(file)
                     setPlayPauseStatus('paused')
-                    setCurrentTime(ZERO)
                 }}
             />
             <Bar
                 onStartChange={setStartTime}
                 onEndChange={setEndTime}
-                max={{ minutes: 3, seconds: 0 }}
+                max={duration}
                 current={currentTime}
                 start={startTime}
                 end={endTime}

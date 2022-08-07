@@ -16,7 +16,6 @@ function FileUploader({
     file: File | null
     onFileChosen: (file: File) => void
 }) {
-    const [innerFile, setInnerFile] = useState<File | null>(file)
     return (
         <>
             <Button variant='contained' component='label'>
@@ -29,12 +28,11 @@ function FileUploader({
                         const file = e.target.files && e.target.files[0]
                         if (file) {
                             onFileChosen(file)
-                            setInnerFile(file)
                         }
                     }}
                 />
             </Button>
-            {innerFile ? <Text>{innerFile.name}</Text> : null}
+            {file ? <Text>{file.name}</Text> : null}
         </>
     )
 }

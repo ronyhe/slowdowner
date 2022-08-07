@@ -1,21 +1,13 @@
 import AudioFileIcon from '@mui/icons-material/AudioFile'
 import Button from '@mui/material/Button'
 import React, { useState } from 'react'
-
 import { styled } from '@mui/material/styles'
 
-const TextDiv = styled('div')(({ theme }) => ({
+const Text = styled('span')(({ theme }) => ({
     ...theme.typography.button,
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1)
 }))
-
-function FileComp({ file }: { file: File | null }) {
-    if (!file) {
-        return null
-    }
-    return <TextDiv>{file.name}</TextDiv>
-}
 
 function FileUploader({
     file,
@@ -42,7 +34,7 @@ function FileUploader({
                     }}
                 />
             </Button>
-            <FileComp file={innerFile} />
+            {innerFile ? <Text>{innerFile.name}</Text> : null}
         </>
     )
 }

@@ -13,7 +13,7 @@ function PlayButton() {
 
 export type PlayPauseStatus = 'playing' | 'paused' | 'disabled'
 
-function flipStatus(status: PlayPauseStatus): PlayPauseStatus {
+export function flipStatus(status: PlayPauseStatus): PlayPauseStatus {
     if (status === 'playing') {
         return 'paused'
     } else {
@@ -23,23 +23,17 @@ function flipStatus(status: PlayPauseStatus): PlayPauseStatus {
 
 function PlayPauseButton(props: {
     status: PlayPauseStatus
-    onStatusChange: (status: PlayPauseStatus) => void
+    onClick: () => void
 }) {
-    const [status, setStatus] = useState(props.status)
-    const onClick = () => {
-        const newStatus = flipStatus(status)
-        props.onStatusChange(newStatus)
-        setStatus(newStatus)
-    }
     return (
         <>
             <Button
                 variant='contained'
                 component='label'
-                onClick={onClick}
+                onClick={() => props.onClick()}
                 disabled={props.status === 'disabled'}
             >
-                {status === 'playing' ? <PauseButton /> : <PlayButton />}
+                {props.status === 'playing' ? <PauseButton /> : <PlayButton />}
             </Button>
         </>
     )

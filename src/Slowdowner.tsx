@@ -1,7 +1,7 @@
 import FileUploader from './FileUploader'
 import Bar from './Bar'
 import { Time, ZERO } from './time'
-import PlayPauseButton, { PlayPauseStatus } from './PlayPauseButton'
+import PlayPauseButton, { flipStatus, PlayPauseStatus } from './PlayPauseButton'
 import React, { useState } from 'react'
 import SpeedController from './SpeedController'
 import Audio from './Audio'
@@ -57,7 +57,9 @@ function Slowdowner() {
                 />
                 <PlayPauseButton
                     status={playPauseStatus}
-                    onStatusChange={setPlayPauseStatus}
+                    onClick={() =>
+                        setPlayPauseStatus(flipStatus(playPauseStatus))
+                    }
                 />
                 <SpeedController speed={speed} onSpeedChange={setSpeed} />
                 {audio}

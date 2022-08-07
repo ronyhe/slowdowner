@@ -6,7 +6,6 @@ import React, { useState } from 'react'
 import SpeedController from './SpeedController'
 import Audio from './Audio'
 import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
 
 const THREE_MINUTES = { minutes: 3, seconds: 0 }
 

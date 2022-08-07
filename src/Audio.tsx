@@ -1,5 +1,5 @@
 import React, { DependencyList, useEffect, useRef } from 'react'
-import { before, fromSeconds, Time, toSeconds } from './time'
+import { after, before, fromSeconds, Time, toSeconds } from './time'
 
 function useAudioEffect(
     audioRef: React.RefObject<HTMLAudioElement>,
@@ -27,6 +27,7 @@ function Audio(props: {
     onCurrentTimeChange: (time: Time) => void
     speed: number
     start: Time
+    end: Time
 }) {
     const ref = useRef<HTMLAudioElement>(null)
     const useAudio = useAudioEffects(ref)
@@ -53,17 +54,20 @@ function Audio(props: {
         audio => {
             const listener = () => {
                 const currentTime = fromSeconds(audio.currentTime)
-                props.onCurrentTimeChange(currentTime)
-                if (before(currentTime, props.start)) {
+                if (
+                    before(currentTime, props.start) ||
+                    after(currentTime, props.end)
+                ) {
                     audio.currentTime = toSeconds(props.start)
                 }
+                props.onCurrentTimeChange(currentTime)
             }
             audio.addEventListener('timeupdate', listener)
             return () => {
                 audio.removeEventListener('timeupdate', listener)
             }
         },
-        [props.start]
+        [props.start, props.end]
     )
     useAudio(
         audio => {

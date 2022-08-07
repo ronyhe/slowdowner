@@ -21,9 +21,15 @@ export function eq(t1: Time, t2: Time): boolean {
 }
 
 export function before(t1: Time, t2: Time): boolean {
-    return t1.minutes < t2.minutes || t1.seconds < t2.seconds
+    return (
+        t1.minutes < t2.minutes ||
+        (t1.minutes === t2.minutes && t1.seconds < t2.seconds)
+    )
 }
 
 export function after(t1: Time, t2: Time): boolean {
-    return t1.minutes > t2.minutes || t1.seconds > t1.seconds
+    return (
+        t1.minutes > t2.minutes ||
+        (t1.minutes === t2.minutes && t1.seconds > t2.seconds)
+    )
 }

@@ -33,3 +33,16 @@ export function after(t1: Time, t2: Time): boolean {
         (t1.minutes === t2.minutes && t1.seconds > t2.seconds)
     )
 }
+
+function padClockText(num: number): string {
+    return String(num).padStart(2, '0').padEnd(2, '0')
+}
+
+export function timeText(time: Time): string {
+    return `${padClockText(time.minutes)}:${padClockText(time.seconds)}`
+}
+
+export function secondsToTimeText(seconds: number): string {
+    const time = fromSeconds(seconds)
+    return timeText(time)
+}

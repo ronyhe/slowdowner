@@ -1,11 +1,12 @@
 import FileUploader from './FileUploader'
 import Bar from './Bar'
-import { Time, ZERO } from './time'
+import { Time, timeText, ZERO } from './time'
 import PlayPauseButton, { flipStatus, PlayPauseStatus } from './PlayPauseButton'
 import React, { useState } from 'react'
 import SpeedController from './SpeedController'
 import Audio from './Audio'
 import Paper from '@mui/material/Paper'
+import Text from './Text'
 
 const THREE_MINUTES = { minutes: 3, seconds: 0 }
 
@@ -14,10 +15,7 @@ function Slowdowner() {
     const [playPauseStatus, setPlayPauseStatus] =
         useState<PlayPauseStatus>('disabled')
     const [speed, setSpeed] = useState(1.0)
-    const [currentTime, setCurrentTime] = useState<Time>({
-        minutes: 1,
-        seconds: 15
-    })
+    const [currentTime, setCurrentTime] = useState<Time>(ZERO)
     const [startTime, setStartTime] = useState<Time>(ZERO)
     const [endTime, setEndTime] = useState<Time>(THREE_MINUTES)
     const [duration, setDuration] = useState<Time>(THREE_MINUTES)
@@ -63,6 +61,7 @@ function Slowdowner() {
                 />
                 <SpeedController speed={speed} onSpeedChange={setSpeed} />
                 {audio}
+                <Text sx={{ float: 'right' }}>{timeText(currentTime)}</Text>
             </Paper>
         </div>
     )

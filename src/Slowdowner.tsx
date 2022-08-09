@@ -36,7 +36,7 @@ function Slowdowner() {
         />
     ) : null
     return (
-        <div style={{ maxWidth: '500px', maxHeight: '150px', margin: '20px' }}>
+        <div style={{ maxWidth: '600px', maxHeight: '200px', margin: '20px' }}>
             <Paper elevation={2} sx={{ padding: '20px' }}>
                 <FileUploader
                     file={file}

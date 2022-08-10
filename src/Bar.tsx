@@ -17,6 +17,16 @@ function Bar(props: {
     return (
         <>
             <Slider
+                sx={{
+                    '& .MuiSlider-thumb': {
+                        borderRadius: 0,
+                        width: '3px'
+                    },
+                    '& .MuiSlider-markActive': {
+                        height: '20px',
+                        border: '1px solid black'
+                    }
+                }}
                 min={0}
                 max={toSeconds(props.max)}
                 marks={[

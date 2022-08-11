@@ -1,8 +1,20 @@
-import Slider from '@mui/material/Slider'
+import Slider, { SliderThumb } from '@mui/material/Slider'
 import { fromSeconds, secondsToTimeText, Time, toSeconds } from './time'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
 export type TimeChangeHandler = (time: Time) => void
+
+function ThumbWithClass(props: any) {
+    if (props['data-index'] === 1) {
+        return (
+            <SliderThumb
+                {...props}
+                className={'current-time-thumb ' + props.className}
+            />
+        )
+    }
+    return <SliderThumb {...props} />
+}
 
 function Bar(props: {
     max: Time
@@ -15,17 +27,12 @@ function Bar(props: {
     const start = toSeconds(props.start)
     const current = toSeconds(props.current)
     const end = toSeconds(props.end)
-    const ref = useRef<HTMLElement>()
-    useEffect(() => {
-        const thumb =
-            ref.current && ref.current.querySelectorAll('.MuiSlider-thumb')[1]
-        if (thumb) {
-            thumb.classList.add('current-time-thumb')
-        }
-    }, [ref])
     return (
         <>
             <Slider
+                components={{
+                    Thumb: ThumbWithClass
+                }}
                 sx={{
                     '& .MuiSlider-thumb': {
                         borderRadius: 0,
@@ -51,7 +58,6 @@ function Bar(props: {
                         }
                     }
                 }}
-                {...({ ref: ref } as {})} // Workaround for ref typing issue in MUI
             />
         </>
     )

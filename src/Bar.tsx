@@ -1,6 +1,6 @@
 import Slider from '@mui/material/Slider'
 import { fromSeconds, secondsToTimeText, Time, toSeconds } from './time'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 export type TimeChangeHandler = (time: Time) => void
 
@@ -13,7 +13,16 @@ function Bar(props: {
     onEndChange: TimeChangeHandler
 }) {
     const start = toSeconds(props.start)
+    const current = toSeconds(props.current)
     const end = toSeconds(props.end)
+    const ref = useRef<HTMLElement>()
+    useEffect(() => {
+        const thumb =
+            ref.current && ref.current.querySelectorAll('.MuiSlider-thumb')[1]
+        if (thumb) {
+            thumb.classList.add('current-time-thumb')
+        }
+    }, [ref])
     return (
         <>
             <Slider
@@ -22,24 +31,18 @@ function Bar(props: {
                         borderRadius: 0,
                         width: '3px'
                     },
-                    '& .MuiSlider-markActive': {
-                        height: '20px',
-                        border: '1px solid black'
+                    '.current-time-thumb': {
+                        color: 'white'
                     }
                 }}
                 min={0}
                 max={toSeconds(props.max)}
-                marks={[
-                    {
-                        value: toSeconds(props.current)
-                    }
-                ]}
                 valueLabelFormat={secondsToTimeText}
                 valueLabelDisplay='auto'
-                value={[start, end]}
+                value={[start, current, end]}
                 disableSwap={true}
                 onChange={(_, values) => {
-                    const [newStart, newEnd] = values as number[]
+                    const [newStart, , newEnd] = values as number[]
                     if (newEnd - newStart > 1) {
                         if (newStart !== start) {
                             props.onStartChange(fromSeconds(newStart))
@@ -48,6 +51,7 @@ function Bar(props: {
                         }
                     }
                 }}
+                {...({ ref: ref } as {})} // Workaround for ref typing issue in MUI
             />
         </>
     )

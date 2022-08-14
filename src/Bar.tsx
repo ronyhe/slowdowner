@@ -40,7 +40,8 @@ function Bar(props: {
                         width: '3px'
                     },
                     '.current-time-thumb': {
-                        color: 'primary.contrastText'
+                        color: 'primary.contrastText',
+                        boxShadow: '5'
                     }
                 }}
                 min={0}

@@ -1,6 +1,6 @@
 import Slider, { SliderThumb } from '@mui/material/Slider'
 import { fromSeconds, secondsToTimeText, Time, toSeconds } from './time'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export type TimeChangeHandler = (time: Time) => void
 
@@ -23,6 +23,7 @@ function Bar(props: {
     end: Time
     onStartChange: TimeChangeHandler
     onEndChange: TimeChangeHandler
+    onCurrentChange: TimeChangeHandler
 }) {
     const start = toSeconds(props.start)
     const current = toSeconds(props.current)
@@ -48,14 +49,23 @@ function Bar(props: {
                 valueLabelDisplay='auto'
                 value={[start, current, end]}
                 disableSwap={true}
+                onChangeCommitted={(_, values) => {
+                    const [, newCurrent] = values as number[]
+                    if (current !== newCurrent) {
+                        props.onCurrentChange(fromSeconds(newCurrent))
+                    }
+                }}
                 onChange={(_, values) => {
-                    const [newStart, , newEnd] = values as number[]
+                    const [newStart, newCurrent, newEnd] = values as number[]
                     if (newEnd - newStart > 1) {
                         if (newStart !== start) {
                             props.onStartChange(fromSeconds(newStart))
                         } else if (newEnd !== end) {
                             props.onEndChange(fromSeconds(newEnd))
                         }
+                    }
+                    if (current !== newCurrent) {
+                        props.onCurrentChange(fromSeconds(newCurrent))
                     }
                 }}
             />

@@ -19,6 +19,7 @@ function Slowdowner() {
     const [startTime, setStartTime] = useState<Time>(ZERO)
     const [endTime, setEndTime] = useState<Time>(THREE_MINUTES)
     const [duration, setDuration] = useState<Time>(THREE_MINUTES)
+    const [userTimeChange, setUserTimeChange] = useState<Time | null>(null)
     const audio = file ? (
         <Audio
             file={file}
@@ -30,6 +31,7 @@ function Slowdowner() {
                 setStartTime(ZERO)
                 setCurrentTime(ZERO)
             }}
+            current={userTimeChange}
             speed={speed}
             start={startTime}
             end={endTime}
@@ -48,6 +50,7 @@ function Slowdowner() {
                 <Bar
                     onStartChange={setStartTime}
                     onEndChange={setEndTime}
+                    onCurrentChange={setUserTimeChange}
                     max={duration}
                     current={currentTime}
                     start={startTime}

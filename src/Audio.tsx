@@ -29,12 +29,21 @@ function Audio(props: {
     speed: number
     start: Time
     end: Time
+    current: Time | null
 }) {
     const ref = useRef<HTMLAudioElement>(null)
     const useAudio = useAudioEffects(ref)
     useAudio(audio => {
         audio.loop = true
     })
+    useAudio(
+        audio => {
+            if (props.current !== null) {
+                audio.currentTime = toSeconds(props.current)
+            }
+        },
+        [props.current]
+    )
     useAudio(
         audio => {
             audio.src = URL.createObjectURL(props.file)

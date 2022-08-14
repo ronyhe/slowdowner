@@ -8,7 +8,7 @@ function LinkToOld() {
                 padding: '20px'
             }}
         >
-            Click here if you liked the old version betters
+            Click here if you liked the old version better
         </Link>
     )
 }

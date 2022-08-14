@@ -8,17 +8,17 @@ import Audio from './Audio'
 import Paper from '@mui/material/Paper'
 import Text from './Text'
 
-const THREE_MINUTES = { minutes: 3, seconds: 0 }
+const THREE_MINUTES: Time = { minutes: 3, seconds: 0 }
 
 function Slowdowner() {
     const [file, setFile] = useState<File | null>(null)
     const [playPauseStatus, setPlayPauseStatus] =
         useState<PlayPauseStatus>('disabled')
     const [speed, setSpeed] = useState(1.0)
-    const [currentTime, setCurrentTime] = useState<Time>(ZERO)
-    const [startTime, setStartTime] = useState<Time>(ZERO)
-    const [endTime, setEndTime] = useState<Time>(THREE_MINUTES)
-    const [duration, setDuration] = useState<Time>(THREE_MINUTES)
+    const [currentTime, setCurrentTime] = useState(ZERO)
+    const [startTime, setStartTime] = useState(ZERO)
+    const [endTime, setEndTime] = useState(THREE_MINUTES)
+    const [duration, setDuration] = useState(THREE_MINUTES)
     const [userTimeChange, setUserTimeChange] = useState<Time | null>(null)
     const audio = file ? (
         <Audio

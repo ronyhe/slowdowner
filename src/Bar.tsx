@@ -1,6 +1,6 @@
 import Slider, { SliderThumb } from '@mui/material/Slider'
 import { fromSeconds, secondsToTimeText, Time, toSeconds } from './time'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 export type TimeChangeHandler = (time: Time) => void
 

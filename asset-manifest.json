@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/slowdowner/static/css/main.e6c13ad2.css",
+    "main.js": "/slowdowner/static/js/main.1137ffa1.js",
+    "static/js/787.aae62394.chunk.js": "/slowdowner/static/js/787.aae62394.chunk.js",
+    "index.html": "/slowdowner/index.html",
+    "main.e6c13ad2.css.map": "/slowdowner/static/css/main.e6c13ad2.css.map",
+    "main.1137ffa1.js.map": "/slowdowner/static/js/main.1137ffa1.js.map",
+    "787.aae62394.chunk.js.map": "/slowdowner/static/js/787.aae62394.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.1137ffa1.js"
+  ]
+}

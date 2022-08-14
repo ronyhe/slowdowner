@@ -1,8 +1,12 @@
 import Slider, { SliderThumb } from '@mui/material/Slider'
-import { fromSeconds, secondsToTimeText, Time, toSeconds } from './time'
+import {
+    fromSeconds,
+    secondsToTimeText,
+    Time,
+    TimeHandler,
+    toSeconds
+} from './time'
 import React from 'react'
-
-export type TimeChangeHandler = (time: Time) => void
 
 function ThumbWithClass(props: any) {
     if (props['data-index'] === 1) {
@@ -21,9 +25,9 @@ function Bar(props: {
     current: Time
     start: Time
     end: Time
-    onStartChange: TimeChangeHandler
-    onEndChange: TimeChangeHandler
-    onCurrentChange: TimeChangeHandler
+    onStartChange: TimeHandler
+    onEndChange: TimeHandler
+    onCurrentChange: TimeHandler
 }) {
     const start = toSeconds(props.start)
     const current = toSeconds(props.current)

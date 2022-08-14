@@ -3,6 +3,8 @@ export interface Time {
     seconds: number
 }
 
+export type TimeHandler = (time: Time) => void
+
 export function toSeconds({ minutes, seconds }: Time): number {
     return minutes * 60 + seconds
 }

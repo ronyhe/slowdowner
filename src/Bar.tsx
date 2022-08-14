@@ -57,13 +57,16 @@ function Bar(props: {
                     }
                 }}
                 onChange={(_, values) => {
-                    const [newStart, , newEnd] = values as number[]
+                    const [newStart, newCurrent, newEnd] = values as number[]
                     if (newEnd - newStart > 1) {
                         if (newStart !== start) {
                             props.onStartChange(fromSeconds(newStart))
                         } else if (newEnd !== end) {
                             props.onEndChange(fromSeconds(newEnd))
                         }
+                    }
+                    if (current !== newCurrent) {
+                        props.onCurrentChange(fromSeconds(newCurrent))
                     }
                 }}
             />

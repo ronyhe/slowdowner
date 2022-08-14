@@ -16,10 +16,6 @@ export function fromSeconds(seconds: number): Time {
 
 export const ZERO: Time = { minutes: 0, seconds: 0 }
 
-export function eq(t1: Time, t2: Time): boolean {
-    return t1.minutes === t2.minutes && t1.seconds === t2.seconds
-}
-
 export function before(t1: Time, t2: Time): boolean {
     return (
         t1.minutes < t2.minutes ||

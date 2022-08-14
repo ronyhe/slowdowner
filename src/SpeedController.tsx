@@ -1,4 +1,3 @@
-import Slider from '@mui/material/Slider'
 import TextField from '@mui/material/TextField'
 import React, { useState } from 'react'
 
